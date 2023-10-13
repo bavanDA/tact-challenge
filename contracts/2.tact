@@ -27,14 +27,7 @@ contract Task2 with Deployable {
   }
 
   receive(msg: Slice) {
-    dump(msg)
-//     send(SendParameters{
-//     to: admin,
-//     value: value, 
-//     mode: SendIgnoreErrors, 
-//     bounce: true, 
-//     body: SomeMessage{arg1: 123, arg2: 1234}.toCell()
-// });
+    dump(msg);
   }
 }
 
