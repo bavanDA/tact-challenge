@@ -35,9 +35,9 @@ contract Task2 with Deployable {
     to: msg.sender,
     value: msg.queryId, 
     mode: 128, 
-    body: "sender".asComment()
-});
-
+    body: msg
+  });
+  
   }
 
   receive(msg: Slice) {
