@@ -18,8 +18,8 @@ message(0x44) Refund {
 }
 
 message UserMsg {
-    sender: Address;
-    message: Slice; 
+    address: Address;
+    originalMessage: Slice; 
 }
 
 contract Task2 with Deployable {
@@ -35,9 +35,9 @@ contract Task2 with Deployable {
     to: msg.sender,
     value: msg.queryId, 
     mode: 128, 
-    body: UserMsg{sender: sender(), message: msg}.toCell()
-  });
-  
+    body: "sender".asComment()
+});
+
   }
 
   receive(msg: Slice) {
@@ -45,8 +45,8 @@ contract Task2 with Deployable {
     send(SendParameters{
     to: self.admin,
     value: 0, 
-    mode: 128, 
-    body: UserMsg{sender: sender(), message: msg}.toCell()
+    mode: SendRemainingValue, 
+    body: UserMsg{address: sender(), originalMessage: msg}.toCell()
     });
 
   }
