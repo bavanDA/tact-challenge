@@ -32,22 +32,16 @@ contract Task2 with Deployable {
   receive(msg: Refund) {
     
     let ctx: Context = context();
-
-    if(ctx.sender == self.admin)
-    {
-      self.forward(msg.sender, DeployOk{queryId: msg.queryId}.toCell(), true , null);
-    }
+    require(ctx.sender == self.admin, "Not Admin!");
+    self.forward(msg.sender, DeployOk{queryId: msg.queryId}.toCell(), true , null);
   }
 
   receive(msg: Slice) {
 
     let ctx: Context = context();
-
     let res: Cell = Responce{ sender: ctx.sender, msg: msg }.toCell();
 
-    let op: Int = msg.loadUint(32);
-
-    if(op!=0x44 && ctx.sender != self.admin)
+    if(ctx.sender != self.admin)
     {
         send(SendParameters{
         to: self.admin,
