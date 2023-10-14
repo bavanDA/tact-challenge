@@ -22,6 +22,10 @@ message UserMsg {
     originalMessage: Slice; 
 }
 
+message DeployOk {
+    queryId: Int as uint64;
+}
+
 contract Task2 with Deployable {
   admin: Address;
 
@@ -31,13 +35,7 @@ contract Task2 with Deployable {
   
   receive(msg: Refund) {
 
-    send(SendParameters{
-    to: msg.sender,
-    value: 0, 
-    mode: 128, 
-    body: "sender".asComment()
-});
-
+    self.forward(msg.sender, DeployOk{queryId: queryId}.toCell(), false, null);
   }
 
   receive(msg: Slice) {
