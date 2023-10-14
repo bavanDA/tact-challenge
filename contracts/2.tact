@@ -33,11 +33,11 @@ contract Task2 with Deployable {
 
     send(SendParameters{
     to: msg.sender,
-    value: msg.queryId, 
+    value: 0, 
     mode: 128, 
     body: msg
   });
-  
+
   }
 
   receive(msg: Slice) {
