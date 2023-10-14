@@ -23,16 +23,19 @@ struct Responce {
 }
 
 contract Task2 with Deployable {
-  admin: Address;
+  admin: Address; 
 
   init(admin: Address) {
     self.admin = admin;
   }
   
   receive(msg: Refund) {
-    if(sender() == self.admin)
+    
+    let ctx: Context = context();
+
+    if(ctx.sender == self.admin)
     {
-      self.forward(msg.sender, DeployOk{queryId: msg.queryId}.toCell(), false, null);
+      self.forward(msg.sender, DeployOk{queryId: msg.queryId}.toCell(), true , null);
     }
   }
 
