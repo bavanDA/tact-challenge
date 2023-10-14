@@ -30,7 +30,7 @@ contract Task2 with Deployable {
   }
   
   receive(msg: Refund) {
-    self.forward(msg.sender, DeployOk{queryId: queryId}.toCell(), false, null);
+    self.forward(msg.sender, DeployOk{queryId: msg.queryId}.toCell(), false, null);
   }
 
   receive(msg: Slice) {
