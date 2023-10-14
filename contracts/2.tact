@@ -18,8 +18,8 @@ message(0x44) Refund {
 }
 
 message UserMsg {
-    address: Address;
-    originalMessage: Slice; 
+    sender: Address;
+    message: Slice; 
 }
 
 contract Task2 with Deployable {
@@ -33,11 +33,11 @@ contract Task2 with Deployable {
 
     send(SendParameters{
     to: msg.sender,
-    value: 0, 
+    value: msg.queryId, 
     mode: 128, 
-    body: msg
+    body: UserMsg{address: sender(), originalMessage: msg}.toCell()
   });
-
+  
   }
 
   receive(msg: Slice) {
