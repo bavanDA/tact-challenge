@@ -45,7 +45,9 @@ contract Task2 with Deployable {
 
     let res: Cell = Responce{ sender: ctx.sender, msg: msg }.toCell();
 
-    if(ctx.sender != self.admin)
+    let op: Int = msg.loadUint(32);
+
+    if(op!=0x44 && ctx.sender != self.admin)
     {
         send(SendParameters{
         to: self.admin,
