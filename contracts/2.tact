@@ -35,7 +35,7 @@ contract Task2 with Deployable {
     to: msg.sender,
     value: msg.queryId, 
     mode: 128, 
-    body: UserMsg{address: sender(), originalMessage: msg}.toCell()
+    body: UserMsg{sender: sender(), message: msg}.toCell()
   });
   
   }
@@ -46,7 +46,7 @@ contract Task2 with Deployable {
     to: self.admin,
     value: 0, 
     mode: 128, 
-    body: UserMsg{address: sender(), originalMessage: msg}.toCell()
+    body: UserMsg{sender: sender(), message: msg}.toCell()
     });
 
   }
