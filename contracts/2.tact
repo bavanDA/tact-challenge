@@ -17,9 +17,9 @@ message(0x44) Refund {
   sender: Address;
 }
 
-message UserMsg {
-    address: Address;
-    originalMessage: Slice; 
+struct Responce {
+    sender: Address;
+    msg: Slice;
 }
 
 contract Task2 with Deployable {
@@ -35,13 +35,19 @@ contract Task2 with Deployable {
 
   receive(msg: Slice) {
 
-    send(SendParameters{
-    to: self.admin,
-    value: 0, 
-    mode: 128, 
-    body: UserMsg{address: sender(), originalMessage: msg}.toCell()
-    });
+    let ctx: Context = context();
 
+    let res: Cell = Responce{ sender: ctx.sender, msg: msg }.toCell();
+
+    if(ctx.sender != self.admin)
+    {
+        send(SendParameters{
+        to: self.admin,
+        value: 0, 
+        mode: SendRemainingValue + SendIgnoreErrors, 
+        body: res
+        });
+    }
   }
 }
 
