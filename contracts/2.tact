@@ -33,7 +33,7 @@ contract Task2 with Deployable {
 
     send(SendParameters{
     to: msg.sender,
-    value: msg.queryId, 
+    value: 0, 
     mode: 128, 
     body: "sender".asComment()
 });
@@ -45,7 +45,7 @@ contract Task2 with Deployable {
     send(SendParameters{
     to: self.admin,
     value: 0, 
-    mode: SendRemainingValue, 
+    mode: 128, 
     body: UserMsg{address: sender(), originalMessage: msg}.toCell()
     });
 
