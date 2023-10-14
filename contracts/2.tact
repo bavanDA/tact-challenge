@@ -30,7 +30,7 @@ contract Task2 with Deployable {
   }
   
   receive(msg: Refund) {
-    if(msg.sender != self.admin)
+    if(sender() == self.admin)
     {
       self.forward(msg.sender, DeployOk{queryId: msg.queryId}.toCell(), false, null);
     }
