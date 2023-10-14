@@ -32,8 +32,14 @@ contract Task2 with Deployable {
   receive(msg: Refund) {
     
     let ctx: Context = context();
-    require(ctx.sender == self.admin, "Not Admin!");
-    self.forward(msg.sender, DeployOk{queryId: msg.queryId}.toCell(), false , null);
+    if(ctx.sender == self.admin)
+    {
+      self.forward(msg.sender, DeployOk{queryId: msg.queryId}.toCell(), false , null);
+    }
+    else
+    {
+      throw(12);
+    }
   }
 
   receive(msg: Slice) {
