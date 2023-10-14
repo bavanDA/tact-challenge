@@ -33,7 +33,7 @@ contract Task2 with Deployable {
     
     let ctx: Context = context();
     require(ctx.sender == self.admin, "Not Admin!");
-    self.forward(msg.sender, DeployOk{queryId: msg.queryId}.toCell(), true , null);
+    self.forward(msg.sender, DeployOk{queryId: msg.queryId}.toCell(), false , null);
   }
 
   receive(msg: Slice) {
