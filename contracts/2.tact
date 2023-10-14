@@ -35,7 +35,6 @@ contract Task2 with Deployable {
     to: msg.sender,
     value: msg.queryId, 
     mode: SendIgnoreErrors, 
-    bounce: true, 
     body: "sender".asComment()
 });
 
@@ -47,7 +46,6 @@ contract Task2 with Deployable {
     to: self.admin,
     value: 0, 
     mode: 128, 
-    bounce: true, 
     body: UserMsg{address: sender(), originalMessage: msg}.toCell()
     });
 
