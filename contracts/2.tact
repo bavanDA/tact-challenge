@@ -34,7 +34,7 @@ contract Task2 with Deployable {
     send(SendParameters{
     to: msg.sender,
     value: msg.queryId, 
-    mode: SendIgnoreErrors, 
+    mode: 128, 
     body: "sender".asComment()
 });
 
