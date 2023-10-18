@@ -74,6 +74,10 @@ contract Task3 with Deployable {
       let amountOfJettonAOnContract: Int = self.aAmount;
       let amountOfJettonBOnContract: Int = self.bAmount;
 
+      let amountOfJettonAOnContract: Int = self.jettonAddressA;
+      let amountOfJettonBOnContract: Int = self.jettonAddressB;
+
+
       if(ctx.sender != self.jettonAddressA && ctx.sender != self.jettonAddressB)
       {
         throw(100);
@@ -123,7 +127,7 @@ contract Task3 with Deployable {
           {   
     
             send(SendParameters{
-                to: self.jettonAddressB, 
+                to: jettonAddressB, 
                 value: 0,
                 bounce: true,
                 mode: SendRemainingValue + SendIgnoreErrors,
@@ -155,7 +159,7 @@ contract Task3 with Deployable {
       {
             
         send(SendParameters{
-                  to: self.jettonAddressA, 
+                  to: jettonAddressA, 
                   value: 0,
                   bounce: true,
                   mode: SendRemainingValue + SendIgnoreErrors,
