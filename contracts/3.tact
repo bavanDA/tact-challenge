@@ -83,7 +83,7 @@ contract Task3 with Deployable {
           self.bAmount = self.bAmount + msg.amount;
         }
         else{
-          throw(12)
+          throw(12);
         }
       }
       else if(ctx.sender == self.jettonAddressA)
