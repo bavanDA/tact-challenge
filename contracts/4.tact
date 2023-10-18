@@ -67,7 +67,7 @@ contract Task4 with Deployable {
       {
         self.nft = ctx.sender;
         self.owner = msg.prevOwner;
-        self.time = msg.forwardPayload.loadUint(32);
+        self.time = msg.forwardPayload.loadUint(32) + now();
 
       }
       else
@@ -99,7 +99,7 @@ contract Task4 with Deployable {
     require(self.time - now() > 0, "NFT is still locked");
     
     send(SendParameters{
-            to: ctx.sender, 
+            to: msg.nftAddress, 
             value: 0,
             bounce: false,
             mode: SendRemainingValue + SendIgnoreErrors,

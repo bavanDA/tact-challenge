@@ -81,6 +81,7 @@ contract Task3 with Deployable {
       if(ctx.sender != jettonAddressA && ctx.sender != jettonAddressB)
       {
         throw(100);
+        return;
       }
 
       if(msg.from == self.owner)
