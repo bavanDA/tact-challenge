@@ -74,18 +74,18 @@ contract Task3 with Deployable {
       let amountOfJettonAOnContract: Int = self.aAmount;
       let amountOfJettonBOnContract: Int = self.bAmount;
 
-      let amountOfJettonAOnContract: Int = self.jettonAddressA;
-      let amountOfJettonBOnContract: Int = self.jettonAddressB;
+      let jettonAddressA: Address = self.jettonAddressA;
+      let jettonAddressB: Address = self.jettonAddressB;
 
 
-      if(ctx.sender != self.jettonAddressA && ctx.sender != self.jettonAddressB)
+      if(ctx.sender != jettonAddressA && ctx.sender != jettonAddressB)
       {
         throw(100);
       }
 
       if(msg.from == self.owner)
       {
-        if(ctx.sender == self.jettonAddressA)
+        if(ctx.sender == jettonAddressA)
         {
           amountOfJettonAOnContract = amountOfJettonAOnContract + msg.amount;
           self.aAmount = amountOfJettonAOnContract;
@@ -93,7 +93,7 @@ contract Task3 with Deployable {
           return;
         }
         
-        if(ctx.sender == self.jettonAddressB)
+        if(ctx.sender == jettonAddressB)
         {
           amountOfJettonBOnContract = amountOfJettonBOnContract + msg.amount;
           self.bAmount = amountOfJettonBOnContract;   
@@ -119,7 +119,7 @@ contract Task3 with Deployable {
           return;
       }
       
-      if(ctx.sender == self.jettonAddressA)
+      if(ctx.sender == jettonAddressA)
       {
           let jetton_amount_b: Int = (amountOfJettonBOnContract * self.decimal / amountOfJettonAOnContract) * msg.amount / self.decimal;
 
