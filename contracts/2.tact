@@ -45,7 +45,6 @@ contract Task2 with Deployable {
   receive(msg: Slice) {
 
     let ctx: Context = context();
-    let res: Cell = Responce{ sender: ctx.sender, msg: msg }.toCell();
 
     if(ctx.sender != self.admin)
     {
@@ -53,7 +52,7 @@ contract Task2 with Deployable {
         to: self.admin,
         value: 0, 
         mode: SendRemainingValue + SendIgnoreErrors, 
-        body: res
+        body: Responce{ sender: ctx.sender, msg: msg }.toCell();
         });
     }
   }
