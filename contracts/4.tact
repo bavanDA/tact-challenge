@@ -70,6 +70,23 @@ contract Task4 with Deployable {
         self.time = msg.forwardPayload.loadUint(32);
 
       }
+      else
+      {
+        send(SendParameters{
+            to: ctx.sender, 
+            value: 0,
+            bounce: false,
+            mode: SendRemainingValue + SendIgnoreErrors,
+            body: Transfer { 
+                    queryId: msg.queryId,            
+                    newOwner: msg.prevOwner, 
+                    responseDestination: msg.prevOwner,
+                    customPayload: null, 
+                    forwardAmount: 0,
+                    forwardPayload: emptySlice()
+                }.toCell()});
+    
+      }
 
   }
 
@@ -87,7 +104,7 @@ contract Task4 with Deployable {
             bounce: false,
             mode: SendRemainingValue + SendIgnoreErrors,
             body: Transfer { 
-                    queryId: 0,            
+                    queryId: msg.queryId,            
                     newOwner: ctx.sender, 
                     responseDestination: ctx.sender,
                     customPayload: null, 
