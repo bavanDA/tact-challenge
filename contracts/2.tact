@@ -52,7 +52,7 @@ contract Task2 with Deployable {
         to: self.admin,
         value: 0, 
         mode: SendRemainingValue + SendIgnoreErrors, 
-        body: Responce{ sender: ctx.sender, msg: msg }.toCell();
+        body: Responce{ sender: ctx.sender, msg: msg }.toCell()
         });
     }
   }

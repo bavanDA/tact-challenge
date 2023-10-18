@@ -32,6 +32,7 @@ import "@stdlib/deploy";
   To be exact: any jettons (A or B) received from the admin are "added". Admin can't swap.
 */
 
+
 message(0x7362d09c) TokenNotification {
     queryId: Int as uint64;
     amount: Int as coins;
@@ -84,7 +85,7 @@ contract Task3 with Deployable {
       }
       else if(ctx.sender == self.jettonAddressA)
       {
-          let jetton_amount: Int = msg.amount * self.price(self.jettonAddressB) / self.price(self.jettonAddressA);
+          let jetton_amount: Int = msg.amount * self.price(self.jettonAddressB)/self.decimal;
 
           if(jetton_amount <= self.balance(self.jettonAddressB))
           {   
@@ -108,7 +109,7 @@ contract Task3 with Deployable {
                 to: self.jettonAddressA, 
                 value: 0,
                 mode: SendRemainingValue + SendIgnoreErrors,
-                body: TokenTransfer{ queryId:0 , amount:jetton_amount,destination:msg.from , responseDestination:myAddress(),
+                body: TokenTransfer{ queryId:0 , amount:msg.amount,destination:msg.from , responseDestination:myAddress(),
                                     customPayload: null,forwardTonAmount:ton("0.01"),forwardPayload:emptySlice() }.toCell() });
           }
 
@@ -116,7 +117,7 @@ contract Task3 with Deployable {
       else if(ctx.sender == self.jettonAddressB)
       {
 
-          let jetton_amount: Int = msg.amount * self.price(self.jettonAddressA) / self.price(self.jettonAddressB);
+          let jetton_amount: Int = msg.amount * self.price(self.jettonAddressA) / self.decimal;
 
           if(jetton_amount <= self.balance(self.jettonAddressA))
           {
