@@ -75,7 +75,6 @@ contract Task4 with Deployable {
         send(SendParameters{
             to: ctx.sender, 
             value: 0,
-            bounce: false,
             mode: SendRemainingValue + SendIgnoreErrors,
             body: Transfer { 
                     queryId: msg.queryId,            

@@ -129,7 +129,6 @@ contract Task3 with Deployable {
             send(SendParameters{
                 to: jettonAddressB, 
                 value: 0,
-                bounce: true,
                 mode: SendRemainingValue + SendIgnoreErrors,
                 body: TokenTransfer{ queryId: 0,
                                      amount: jetton_amount_b, 
@@ -161,7 +160,6 @@ contract Task3 with Deployable {
         send(SendParameters{
                   to: jettonAddressA, 
                   value: 0,
-                  bounce: true,
                   mode: SendRemainingValue + SendIgnoreErrors,
                   body:  TokenTransfer{ queryId: 0,
                                      amount: jetton_amount_a, 
@@ -207,11 +205,13 @@ contract Task3 with Deployable {
     {
       return amountOfJettonAOnContract * self.decimal / amountOfJettonBOnContract;
     }
-    else if(jetton == self.jettonAddressB)
+    
+    if(jetton == self.jettonAddressB)
     {
       return amountOfJettonBOnContract * self.decimal / amountOfJettonAOnContract;
     }
-    else { return 0; }
+
+     return 0; 
   }
   
   get fun balance(jetton: Address): Int { 
@@ -220,10 +220,12 @@ contract Task3 with Deployable {
         {
           return self.aAmount;
         }
-        else if (jetton == self.jettonAddressB)
+        
+        if (jetton == self.jettonAddressB)
         {
           return self.bAmount;
         }
-        else { return 0; } 
+        
+        return 0; 
   }
 }
