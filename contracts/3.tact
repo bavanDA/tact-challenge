@@ -101,84 +101,69 @@ contract Task3 with Deployable {
         }
       }
 
-      if(amountOfJettonBOnContract == 0 || amountOfJettonAOnContract == 0)
-      {
-          send(SendParameters{
-                to: ctx.sender, 
-                value: 0,
-                bounce: false,
-                mode: SendRemainingValue + SendIgnoreErrors,
-                body: TokenTransfer{ queryId: 0,
-                                     amount: msg.amount, 
-                                     destination:  msg.from,
-                                     responseDestination: myAddress(), 
-                                     customPayload: null,
-                                     forwardTonAmount:  ton("0.01"),
-                                     forwardPayload: emptySlice() }.toCell() });
+    if(amountOfJettonAOnContract> 0)
+    {
+          if(ctx.sender == jettonAddressA)
+          {
+              let jetton_amount_b: Int = (amountOfJettonBOnContract * self.decimal / amountOfJettonAOnContract) * msg.amount / self.decimal;
 
-          return;
+              if(jetton_amount_b <= amountOfJettonBOnContract)
+              {   
+        
+                send(SendParameters{
+                    to: jettonAddressB, 
+                    value: 0,
+                    mode: SendRemainingValue + SendIgnoreErrors,
+                    body: TokenTransfer{ queryId: 0,
+                                        amount: jetton_amount_b, 
+                                        destination:  msg.from,
+                                        responseDestination: myAddress(), 
+                                        customPayload: null,
+                                        forwardTonAmount:  ton("0.01"),
+                                        forwardPayload: emptySlice() }.toCell() });
+
+                
+                amountOfJettonAOnContract = amountOfJettonAOnContract +  msg.amount;
+                amountOfJettonBOnContract = amountOfJettonBOnContract - jetton_amount_b;
+
+
+                self.aAmount = amountOfJettonAOnContract;
+                self.bAmount = amountOfJettonBOnContract;                         
+
+                return;
+
+              }          
+          }
       }
-      
-      if(ctx.sender == jettonAddressA)
+      if(amountOfJettonBOnContract> 0)
       {
-          let jetton_amount_b: Int = (amountOfJettonBOnContract * self.decimal / amountOfJettonAOnContract) * msg.amount / self.decimal;
+          let jetton_amount_a: Int = (amountOfJettonAOnContract  * self.decimal / amountOfJettonBOnContract ) * msg.amount /self.decimal;
 
-          if(jetton_amount_b <= amountOfJettonBOnContract)
-          {   
-    
+          if(jetton_amount_a <= amountOfJettonAOnContract )
+          {
+                
             send(SendParameters{
-                to: jettonAddressB, 
-                value: 0,
-                mode: SendRemainingValue + SendIgnoreErrors,
-                body: TokenTransfer{ queryId: 0,
-                                     amount: jetton_amount_b, 
-                                     destination:  msg.from,
-                                     responseDestination: myAddress(), 
-                                     customPayload: null,
-                                     forwardTonAmount:  ton("0.01"),
-                                     forwardPayload: emptySlice() }.toCell() });
-
-            
-            amountOfJettonAOnContract = amountOfJettonAOnContract +  msg.amount;
-            amountOfJettonBOnContract = amountOfJettonBOnContract - jetton_amount_b;
+                      to: jettonAddressA, 
+                      value: 0,
+                      mode: SendRemainingValue + SendIgnoreErrors,
+                      body:  TokenTransfer{ queryId: 0,
+                                        amount: jetton_amount_a, 
+                                        destination:  msg.from,
+                                        responseDestination: myAddress(), 
+                                        customPayload: null,
+                                        forwardTonAmount:  ton("0.01"),
+                                        forwardPayload: emptySlice() }.toCell() });
 
 
+            amountOfJettonBOnContract = amountOfJettonBOnContract +  msg.amount;
+            amountOfJettonAOnContract = amountOfJettonAOnContract - jetton_amount_a;
+
+            self.bAmount = amountOfJettonBOnContract;
             self.aAmount = amountOfJettonAOnContract;
-            self.bAmount = amountOfJettonBOnContract;                         
 
             return;
-
-          }          
+          }
       }
-      
-
-      let jetton_amount_a: Int = (amountOfJettonAOnContract  * self.decimal / amountOfJettonBOnContract ) * msg.amount /self.decimal;
-
-      if(jetton_amount_a <= amountOfJettonAOnContract )
-      {
-            
-        send(SendParameters{
-                  to: jettonAddressA, 
-                  value: 0,
-                  mode: SendRemainingValue + SendIgnoreErrors,
-                  body:  TokenTransfer{ queryId: 0,
-                                     amount: jetton_amount_a, 
-                                     destination:  msg.from,
-                                     responseDestination: myAddress(), 
-                                     customPayload: null,
-                                     forwardTonAmount:  ton("0.01"),
-                                     forwardPayload: emptySlice() }.toCell() });
-
-
-        amountOfJettonBOnContract = amountOfJettonBOnContract +  msg.amount;
-        amountOfJettonAOnContract = amountOfJettonAOnContract - jetton_amount_a;
-
-        self.bAmount = amountOfJettonBOnContract;
-        self.aAmount = amountOfJettonAOnContract;
-
-        return;
-      }
-      
 
       send(SendParameters{
           to: ctx.sender, 
