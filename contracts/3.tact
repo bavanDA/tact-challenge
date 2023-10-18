@@ -89,7 +89,9 @@ contract Task3 with Deployable {
           if(jetton_amount <= self.balance(self.jettonAddressB))
           {   
 
-            self.bAmount = self.bAmount - msg.amount;
+            self.aAmount = self.aAmount + msg.amount;
+
+            self.bAmount = self.bAmount - jetton_amount;
             
             send(SendParameters{
                 to: self.jettonAddressB, 
@@ -119,7 +121,9 @@ contract Task3 with Deployable {
           if(jetton_amount <= self.balance(self.jettonAddressA))
           {
             
-            self.aAmount = self.aAmount - msg.amount;
+
+            self.bAmount = self.bAmount + msg.amount;
+            self.aAmount = self.aAmount - jetton_amount;
 
               send(SendParameters{
                 to: self.jettonAddressA, 
