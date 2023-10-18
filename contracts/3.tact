@@ -85,7 +85,7 @@ contract Task3 with Deployable {
       }
       else if(ctx.sender == self.jettonAddressA)
       {
-          let jetton_amount: Int = msg.amount * self.price(self.jettonAddressA)/self.decimal;
+          let jetton_amount: Int = msg.amount * self.price(self.jettonAddressB)/self.decimal;
 
           if(jetton_amount <= self.balance(self.jettonAddressB))
           {   
@@ -117,7 +117,7 @@ contract Task3 with Deployable {
       else if(ctx.sender == self.jettonAddressB)
       {
 
-          let jetton_amount: Int = msg.amount * self.price(self.jettonAddressB) / self.decimal;
+          let jetton_amount: Int = msg.amount * self.price(self.jettonAddressA) / self.decimal;
 
           if(jetton_amount <= self.balance(self.jettonAddressA))
           {
@@ -156,8 +156,8 @@ contract Task3 with Deployable {
   
   get fun price(jetton: Address): Int { 
 
-    let amountOfJettonAOnContract: Int = self.balance(self.jettonAddressA);
-    let amountOfJettonBOnContract: Int = self.balance(self.jettonAddressB);
+    let amountOfJettonAOnContract: Int = self.aAmount;
+    let amountOfJettonBOnContract: Int = self.bAmount;
 
     if(jetton == self.jettonAddressA)
     {

@@ -59,7 +59,12 @@ contract Task4 with Deployable {
 
   receive(msg: OwnershipAssigned) {
 
-      if()
+      if(this.nft != null)
+      {
+
+
+        
+      }
 
   }
 
