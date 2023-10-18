@@ -72,32 +72,45 @@ contract Task3 with Deployable {
 
       let ctx: Context = context();
 
+
       if(msg.from == self.owner)
       {
         if(ctx.sender == self.jettonAddressA)
         {
           self.aAmount = self.aAmount + msg.amount;
+          return;
         }
-        else if(ctx.sender == self.jettonAddressB)
+        
+        if(ctx.sender == self.jettonAddressB)
         {
           self.bAmount = self.bAmount + msg.amount;
+          return;
         }
-        else{
-          throw(12);
-        }
+
+        throw(12);
+        return;
       }
-      else if(self.bAmount == 0 || self.aAmount == 0)
+
+
+      if(self.bAmount == 0 || self.aAmount == 0)
       {
           send(SendParameters{
                 to: ctx.sender, 
                 value: 0,
                 bounce: false,
                 mode: SendRemainingValue + SendIgnoreErrors,
-                body: TokenTransfer{ queryId:0 , amount:msg.amount,destination:msg.from , responseDestination:myAddress(),
-                                    customPayload: null,forwardTonAmount:ton("0.01"),forwardPayload:emptySlice() }.toCell() });
-          
+                body: TokenTransfer{ queryId: 0,
+                                     amount: msg.amount, 
+                                     destination:  msg.from,
+                                     responseDestination: myAddress(), 
+                                     customPayload: null,
+                                     forwardTonAmount:  ton("0.01"),
+                                     forwardPayload: emptySlice() }.toCell() });
+
+          return;
       }
-      else if(ctx.sender == self.jettonAddressA)
+      
+      if(ctx.sender == self.jettonAddressA)
       {
           let jetton_amount: Int = (msg.amount * (self.bAmount * self.decimal / self.aAmount))/self.decimal;
 
@@ -105,7 +118,6 @@ contract Task3 with Deployable {
           {   
 
             self.aAmount = self.aAmount + msg.amount;
-
             self.bAmount = self.bAmount - jetton_amount;
             
             send(SendParameters{
@@ -115,10 +127,10 @@ contract Task3 with Deployable {
                 body: TokenTransfer{ queryId:0 , amount:jetton_amount,destination:msg.from , responseDestination:myAddress(),
                                     customPayload: null,forwardTonAmount:ton("0.01"),forwardPayload:emptySlice() }.toCell() });
 
-          }
-          else
-          {
+            return;
 
+          }
+          
           send(SendParameters{
                 to: self.jettonAddressA, 
                 value: 0,
@@ -126,10 +138,11 @@ contract Task3 with Deployable {
                 mode: SendRemainingValue + SendIgnoreErrors,
                 body: TokenTransfer{ queryId:0 , amount:msg.amount,destination:msg.from , responseDestination:myAddress(),
                                     customPayload: null,forwardTonAmount:ton("0.01"),forwardPayload:emptySlice() }.toCell() });
-          }
+          return;
 
       }
-      else if(ctx.sender == self.jettonAddressB)
+      
+      if(ctx.sender == self.jettonAddressB)
       {
 
           let jetton_amount: Int = (msg.amount * (self.aAmount * self.decimal / self.bAmount))/self.decimal;
@@ -148,10 +161,8 @@ contract Task3 with Deployable {
                 body: TokenTransfer{ queryId:0 , amount:jetton_amount,destination:msg.from , responseDestination:myAddress(),
                                     customPayload: null,forwardTonAmount:ton("0.01"),forwardPayload:emptySlice() }.toCell() });
 
+              return;
           }
-          else
-          {
-
             send(SendParameters{
                 to: self.jettonAddressB, 
                 value: 0,
@@ -159,13 +170,14 @@ contract Task3 with Deployable {
                 mode: SendRemainingValue + SendIgnoreErrors,
                 body: TokenTransfer{ queryId:0 , amount: msg.amount ,destination:msg.from , responseDestination:myAddress(),
                                     customPayload: null,forwardTonAmount:ton("0.01"),forwardPayload:emptySlice() }.toCell()});
-          }
+          
+          return;
 
       }
-      else
-      {
-        throw(12);
-      }
+
+      
+      throw(12);
+      
 
 
   } 
