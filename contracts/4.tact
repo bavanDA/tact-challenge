@@ -51,7 +51,7 @@ contract Task4 with Deployable {
 
   nft: Address?;
   owner: Address?;
-  time : Int = 0;
+  time : Int as uint32 = 0;
 
   
   init(seed: Int) {
