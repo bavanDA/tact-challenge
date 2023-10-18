@@ -189,11 +189,11 @@ contract Task3 with Deployable {
 
     if(jetton == self.jettonAddressA)
     {
-      return amountOfJettonAOnContract * self.decimal / amountOfJettonBOnContract;
+      return self.aAmount * self.decimal / self.bAmount;
     }
     else if(jetton == self.jettonAddressB)
     {
-      return amountOfJettonBOnContract * self.decimal / amountOfJettonAOnContract;
+      return self.bAmount * self.decimal / self.aAmount;
     }
     else { return 0; }
   }
