@@ -71,6 +71,8 @@ contract Task3 with Deployable {
   receive(msg: TokenNotification) {
 
       let ctx: Context = context();
+      let amountOfJettonAOnContract: Int = self.aAmount;
+      let amountOfJettonBOnContract: Int = self.bAmount;
 
       if(ctx.sender != self.jettonAddressA && ctx.sender != self.jettonAddressB)
       {
@@ -81,18 +83,21 @@ contract Task3 with Deployable {
       {
         if(ctx.sender == self.jettonAddressA)
         {
-          self.aAmount = self.aAmount + msg.amount;
+          amountOfJettonAOnContract = amountOfJettonAOnContract + msg.amount;
+          self.aAmount = amountOfJettonAOnContract;
+
           return;
         }
         
         if(ctx.sender == self.jettonAddressB)
         {
-          self.bAmount = self.bAmount + msg.amount;
+          amountOfJettonBOnContract = amountOfJettonBOnContract + msg.amount;
+          self.bAmount = amountOfJettonBOnContract;   
           return;
         }
       }
 
-      if(self.bAmount == 0 || self.aAmount == 0)
+      if(amountOfJettonBOnContract == 0 || amountOfJettonAOnContract == 0)
       {
           send(SendParameters{
                 to: ctx.sender, 
@@ -112,9 +117,9 @@ contract Task3 with Deployable {
       
       if(ctx.sender == self.jettonAddressA)
       {
-          let jetton_amount_b: Int = (self.bAmount * self.decimal / self.aAmount) * msg.amount /self.decimal;
+          let jetton_amount_b: Int = (amountOfJettonBOnContract * self.decimal / amountOfJettonAOnContract) * msg.amount / self.decimal;
 
-          if(jetton_amount_b <= self.bAmount)
+          if(jetton_amount_b <= amountOfJettonBOnContract)
           {   
     
             send(SendParameters{
@@ -130,9 +135,13 @@ contract Task3 with Deployable {
                                      forwardTonAmount:  ton("0.01"),
                                      forwardPayload: emptySlice() }.toCell() });
 
+            
+            amountOfJettonAOnContract = amountOfJettonAOnContract +  msg.amount;
+            amountOfJettonBOnContract = amountOfJettonBOnContract - jetton_amount_b;
 
-            self.aAmount = self.aAmount + msg.amount;
-            self.bAmount = self.bAmount - jetton_amount_b;                         
+
+            self.aAmount = amountOfJettonAOnContract;
+            self.bAmount = amountOfJettonBOnContract;                         
 
             return;
 
@@ -140,9 +149,9 @@ contract Task3 with Deployable {
       }
       
 
-      let jetton_amount_a: Int = (self.aAmount * self.decimal / self.bAmount) * msg.amount /self.decimal;
+      let jetton_amount_a: Int = (amountOfJettonAOnContract  * self.decimal / amountOfJettonBOnContract ) * msg.amount /self.decimal;
 
-      if(jetton_amount_a <= self.aAmount)
+      if(jetton_amount_a <= amountOfJettonAOnContract )
       {
             
         send(SendParameters{
@@ -159,8 +168,11 @@ contract Task3 with Deployable {
                                      forwardPayload: emptySlice() }.toCell() });
 
 
-        self.bAmount = self.bAmount + msg.amount;
-        self.aAmount = self.aAmount - jetton_amount_a;
+        amountOfJettonBOnContract = amountOfJettonBOnContract +  msg.amount;
+        amountOfJettonAOnContract = amountOfJettonAOnContract - jetton_amount_a;
+
+        self.bAmount = amountOfJettonBOnContract;
+        self.aAmount = amountOfJettonAOnContract;
 
         return;
       }
@@ -189,11 +201,11 @@ contract Task3 with Deployable {
 
     if(jetton == self.jettonAddressA)
     {
-      return self.aAmount * self.decimal / self.bAmount;
+      return amountOfJettonAOnContract * self.decimal / amountOfJettonBOnContract;
     }
     else if(jetton == self.jettonAddressB)
     {
-      return self.bAmount * self.decimal / self.aAmount;
+      return amountOfJettonBOnContract * self.decimal / amountOfJettonAOnContract;
     }
     else { return 0; }
   }
