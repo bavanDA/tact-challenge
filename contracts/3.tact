@@ -74,7 +74,7 @@ contract Task3 with Deployable {
 
       if(ctx.sender != self.jettonAddressA && ctx.sender != self.jettonAddressB)
       {
-        throw(12);
+        throw(100);
       }
 
       if(msg.from == self.owner)
@@ -120,6 +120,7 @@ contract Task3 with Deployable {
             send(SendParameters{
                 to: self.jettonAddressB, 
                 value: 0,
+                bounce: true,
                 mode: SendRemainingValue + SendIgnoreErrors,
                 body: TokenTransfer{ queryId: 0,
                                      amount: jetton_amount_b, 
@@ -147,6 +148,7 @@ contract Task3 with Deployable {
         send(SendParameters{
                   to: self.jettonAddressA, 
                   value: 0,
+                  bounce: true,
                   mode: SendRemainingValue + SendIgnoreErrors,
                   body:  TokenTransfer{ queryId: 0,
                                      amount: jetton_amount_a, 
