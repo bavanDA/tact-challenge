@@ -98,7 +98,7 @@ contract Task4 with Deployable {
 
         require(ctx.sender == self.owner, "Invalid sender");
         
-        if(self.time - now() == 0)
+        if(self.time - now() <= 0)
         {
         send(SendParameters{
                 to: msg.nftAddress, 
