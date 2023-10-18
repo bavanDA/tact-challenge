@@ -86,6 +86,17 @@ contract Task3 with Deployable {
           throw(12);
         }
       }
+      else if(self.bAmount == 0 || self.aAmount == 0)
+      {
+          send(SendParameters{
+                to: ctx.sender, 
+                value: 0,
+                bounce: false,
+                mode: SendRemainingValue + SendIgnoreErrors,
+                body: TokenTransfer{ queryId:0 , amount:msg.amount,destination:msg.from , responseDestination:myAddress(),
+                                    customPayload: null,forwardTonAmount:ton("0.01"),forwardPayload:emptySlice() }.toCell() });
+          
+      }
       else if(ctx.sender == self.jettonAddressA)
       {
           let jetton_amount: Int = (msg.amount * (self.bAmount * self.decimal / self.aAmount))/self.decimal;
