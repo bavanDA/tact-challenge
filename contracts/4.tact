@@ -96,8 +96,9 @@ contract Task4 with Deployable {
     
 
     require(ctx.sender == self.owner, "Invalid sender");
-    require(self.time - now() > 0, "NFT is still locked");
     
+    if(self.time - now() == 0)
+    {
     send(SendParameters{
             to: msg.nftAddress, 
             value: 0,
@@ -111,7 +112,11 @@ contract Task4 with Deployable {
                     forwardAmount: 0,
                     forwardPayload: emptySlice()
                 }.toCell()});
-    
+    }
+    else
+    {
+      self.reply("NFT is still locked".asComment());
+    }
   }
 
   get fun time(): Int {
