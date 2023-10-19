@@ -78,6 +78,8 @@ contract Task3 with Deployable {
       //   throw(100);
       // }
 
+      require(ctx.sender == self.jettonAddressA || ctx.sender == self.jettonAddressB, "Invalid Jetton");
+
       if(msg.from == self.owner)
       {
         if(ctx.sender == self.jettonAddressA)
@@ -152,7 +154,6 @@ contract Task3 with Deployable {
       send(SendParameters{
           to: ctx.sender, 
           value: 0,
-          bounce: false,
           mode: SendRemainingValue + SendIgnoreErrors,
           body: TokenTransfer{ queryId: 0,
                                amount: msg.amount, 
