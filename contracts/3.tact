@@ -80,13 +80,13 @@ contract Task3 with Deployable {
 
       if(msg.from == self.owner)
       {
-        if(ctx.sender == jettonAddressA)
+        if(ctx.sender == self.jettonAddressA)
         {
           self.aAmount = self.aAmount + msg.amount;
           return;
         }
         
-        if(ctx.sender == jettonAddressB)
+        if(ctx.sender == self.jettonAddressB)
         {
           self.bAmount  = self.bAmount + msg.amount;
           return;
@@ -95,7 +95,7 @@ contract Task3 with Deployable {
 
     if(self.aAmount> 0 && self.bAmount> 0 ) 
     {
-          if(ctx.sender == jettonAddressA)
+          if(ctx.sender == self.jettonAddressA)
           {
               let jetton_amount_b: Int = (self.bAmount * self.decimal / self.aAmount) * msg.amount / self.decimal;
 
@@ -103,7 +103,7 @@ contract Task3 with Deployable {
               {   
         
                 send(SendParameters{
-                    to: jettonAddressB, 
+                    to: self.jettonAddressB, 
                     value: 0,
                     mode: SendRemainingValue + SendIgnoreErrors,
                     body: TokenTransfer{ queryId: 0,
@@ -129,7 +129,7 @@ contract Task3 with Deployable {
           {
                 
             send(SendParameters{
-                      to: jettonAddressA, 
+                      to: self.jettonAddressA, 
                       value: 0,
                       mode: SendRemainingValue + SendIgnoreErrors,
                       body:  TokenTransfer{ queryId: 0,

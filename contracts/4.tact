@@ -129,10 +129,10 @@ contract Task4 with Deployable {
 
     if(self.time > 0)
     {      
-      return 0; 
+      return self.time - now();
     }
      
-     return self.time - now();
+     return 0;
   }
 
   get fun nft(): Address? {
