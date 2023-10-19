@@ -71,14 +71,9 @@ contract Task3 with Deployable {
   receive(msg: TokenNotification) {
 
       let ctx: Context = context();
-      let amountOfJettonAOnContract: Int = self.aAmount;
-      let amountOfJettonBOnContract: Int = self.bAmount;
-
-      let jettonAddressA: Address = self.jettonAddressA;
-      let jettonAddressB: Address = self.jettonAddressB;
 
 
-      if(ctx.sender != jettonAddressA && ctx.sender != jettonAddressB)
+      if(ctx.sender != self.jettonAddressA && ctx.sender != self.jettonAddressB)
       {
         throw(100);
       }
@@ -87,8 +82,8 @@ contract Task3 with Deployable {
       {
         if(ctx.sender == jettonAddressA)
         {
-          amountOfJettonAOnContract = amountOfJettonAOnContract + msg.amount;
-          self.aAmount = amountOfJettonAOnContract;
+          self.aAmount = self.aAmount + msg.amount;
+          self.aAmount = self.aAmount;
 
           return;
         }
@@ -101,11 +96,11 @@ contract Task3 with Deployable {
         }
       }
 
-    if(amountOfJettonAOnContract> 0 && amountOfJettonBOnContract> 0 ) 
+    if(self.aAmount> 0 && amountOfJettonBOnContract> 0 ) 
     {
           if(ctx.sender == jettonAddressA)
           {
-              let jetton_amount_b: Int = (amountOfJettonBOnContract * self.decimal / amountOfJettonAOnContract) * msg.amount / self.decimal;
+              let jetton_amount_b: Int = (amountOfJettonBOnContract * self.decimal / self.aAmount) * msg.amount / self.decimal;
 
               if(jetton_amount_b <= amountOfJettonBOnContract)
               {   
@@ -123,11 +118,11 @@ contract Task3 with Deployable {
                                         forwardPayload: emptySlice() }.toCell() });
 
                 
-                amountOfJettonAOnContract = amountOfJettonAOnContract +  msg.amount;
+                self.aAmount = self.aAmount +  msg.amount;
                 amountOfJettonBOnContract = amountOfJettonBOnContract - jetton_amount_b;
 
 
-                self.aAmount = amountOfJettonAOnContract;
+                self.aAmount = self.aAmount;
                 self.bAmount = amountOfJettonBOnContract;                         
 
                 return;
@@ -135,9 +130,9 @@ contract Task3 with Deployable {
               }          
           }
      
-          let jetton_amount_a: Int = (amountOfJettonAOnContract  * self.decimal / amountOfJettonBOnContract ) * msg.amount /self.decimal;
+          let jetton_amount_a: Int = (self.aAmount  * self.decimal / amountOfJettonBOnContract ) * msg.amount /self.decimal;
 
-          if(jetton_amount_a <= amountOfJettonAOnContract )
+          if(jetton_amount_a <= self.aAmount )
           {
                 
             send(SendParameters{
@@ -154,10 +149,10 @@ contract Task3 with Deployable {
 
 
             amountOfJettonBOnContract = amountOfJettonBOnContract +  msg.amount;
-            amountOfJettonAOnContract = amountOfJettonAOnContract - jetton_amount_a;
+            self.aAmount = self.aAmount - jetton_amount_a;
 
             self.bAmount = amountOfJettonBOnContract;
-            self.aAmount = amountOfJettonAOnContract;
+            self.aAmount = self.aAmount;
 
             return;
           }
