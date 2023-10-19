@@ -168,17 +168,14 @@ contract Task3 with Deployable {
   
   get fun price(jetton: Address): Int { 
 
-    let amountOfJettonAOnContract: Int = self.aAmount;
-    let amountOfJettonBOnContract: Int = self.bAmount;
-
     if(jetton == self.jettonAddressA)
     {
-      return amountOfJettonAOnContract * self.decimal / amountOfJettonBOnContract;
+      return self.aAmount * self.decimal / self.bAmount;
     }
     
     if(jetton == self.jettonAddressB)
     {
-      return amountOfJettonBOnContract * self.decimal / amountOfJettonAOnContract;
+      return self.bAmount * self.decimal / self.aAmount;
     }
 
      return 0; 
