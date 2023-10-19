@@ -127,7 +127,7 @@ contract Task4 with Deployable {
 
   get fun time(): Int {
 
-    if(self.time > 0)
+    if(self.time > 0 && this.nft != null)
     {      
       return self.time - now();
     }
