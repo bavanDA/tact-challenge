@@ -107,7 +107,7 @@ contract Task3 with Deployable {
                 send(SendParameters{
                     to: self.jettonAddressB, 
                     value: 0,
-                    mode: SendRemainingValue + SendIgnoreErrors,
+                    mode: SendRemainingValue,
                     body: TokenTransfer{ queryId: 0,
                                         amount: jetton_amount_b, 
                                         destination:  msg.from,
@@ -133,7 +133,7 @@ contract Task3 with Deployable {
             send(SendParameters{
                       to: self.jettonAddressA, 
                       value: 0,
-                      mode: SendRemainingValue + SendIgnoreErrors,
+                      mode: SendRemainingValue,
                       body:  TokenTransfer{ queryId: 0,
                                         amount: jetton_amount_a, 
                                         destination:  msg.from,
@@ -154,7 +154,7 @@ contract Task3 with Deployable {
       send(SendParameters{
           to: ctx.sender, 
           value: 0,
-          mode: SendRemainingValue + SendIgnoreErrors,
+          mode: SendRemainingValue,
           body: TokenTransfer{ queryId: 0,
                                amount: msg.amount, 
                               destination:  msg.from,
