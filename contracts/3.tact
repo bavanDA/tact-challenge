@@ -101,7 +101,7 @@ contract Task3 with Deployable {
         }
       }
 
-    if(amountOfJettonAOnContract> 0)
+    if(amountOfJettonAOnContract> 0 or amountOfJettonBOnContract> 0 ) 
     {
           if(ctx.sender == jettonAddressA)
           {
@@ -134,9 +134,7 @@ contract Task3 with Deployable {
 
               }          
           }
-      }
-      if(amountOfJettonBOnContract> 0)
-      {
+     
           let jetton_amount_a: Int = (amountOfJettonAOnContract  * self.decimal / amountOfJettonBOnContract ) * msg.amount /self.decimal;
 
           if(jetton_amount_a <= amountOfJettonAOnContract )
@@ -164,6 +162,7 @@ contract Task3 with Deployable {
             return;
           }
       }
+  
 
       send(SendParameters{
           to: ctx.sender, 
