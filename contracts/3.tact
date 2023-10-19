@@ -73,7 +73,7 @@ contract Task3 with Deployable {
       let ctx: Context = context();
 
 
-      if(ctx.sender != self.jettonAddressA && ctx.sender != self.jettonAddressB)
+      if(!(ctx.sender == self.jettonAddressA || ctx.sender == self.jettonAddressB))
       {
         throw(100);
       }

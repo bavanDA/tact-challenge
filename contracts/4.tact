@@ -68,7 +68,7 @@ contract Task4 with Deployable {
       {
         self.nft = ctx.sender;
         self.owner = msg.prevOwner;
-        self.time =  now()+ msg.forwardPayload.loadUint(32);
+        self.time =  now() + msg.forwardPayload.loadUint(32);
 
       }
       else
