@@ -72,12 +72,6 @@ contract Task3 with Deployable {
 
       let ctx: Context = context();
 
-
-      // if(!(ctx.sender == self.jettonAddressA || ctx.sender == self.jettonAddressB))
-      // {
-      //   throw(100);
-      // }
-
       require(ctx.sender == self.jettonAddressA || ctx.sender == self.jettonAddressB, "Invalid Jetton");
 
       if(msg.from == self.owner)
@@ -170,12 +164,12 @@ contract Task3 with Deployable {
 
     if(jetton == self.jettonAddressA)
     {
-      return self.aAmount * self.decimal / self.bAmount;
+      return self.bAmount * self.decimal / self.aAmount;
     }
     
     if(jetton == self.jettonAddressB)
     {
-      return self.bAmount * self.decimal / self.aAmount;
+      return self.aAmount * self.decimal / self.bAmount;
     }
 
      return 0; 
