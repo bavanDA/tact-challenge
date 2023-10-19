@@ -125,7 +125,7 @@ contract Task3 with Deployable {
               }          
           }
      
-          let jetton_amount_a: Int = (self.aAmount  * self.decimal / self.bAmount ) * msg.amount /self.decimal;
+          let jetton_amount_a: Int = (self.aAmount  * self.decimal / self.bAmount ) * msg.amount / self.decimal;
 
           if(jetton_amount_a <= self.aAmount )
           {
