@@ -101,7 +101,7 @@ contract Task3 with Deployable {
         }
       }
 
-    if(amountOfJettonAOnContract> 0 or amountOfJettonBOnContract> 0 ) 
+    if(amountOfJettonAOnContract> 0 && amountOfJettonBOnContract> 0 ) 
     {
           if(ctx.sender == jettonAddressA)
           {
