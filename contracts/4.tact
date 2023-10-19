@@ -103,7 +103,7 @@ contract Task4 with Deployable {
         send(SendParameters{
                 to: msg.nftAddress, 
                 value: 0,
-                mode: SendRemainingValue + SendIgnoreErrors,
+                mode: SendRemainingBalance,
                 body: Transfer { 
                         queryId: msg.queryId,            
                         newOwner: ctx.sender, 
@@ -126,6 +126,12 @@ contract Task4 with Deployable {
   }
 
   get fun time(): Int {
+
+    if(self.nft != null)
+    {      
+      return 0; 
+    }
+     
      return self.time - now();
   }
 
