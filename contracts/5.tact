@@ -169,17 +169,17 @@ contract Task5 with Deployable {
 
       if(nft_address != null)
       {
-      // send(SendParameters{
-      //       to: nft_address, 
-      //       value: 0,
-      //       mode: SendPayGasSeparately,
-      //       body: Transfer { 
-      //               queryId: msg.queryId,            
-      //               newOwner: self.owner, 
-      //               responseDestination: self.owner,
-      //               customPayload: null, 
-      //               forwardAmount: 0,
-      //               forwardPayload: emptySlice()}.toCell()});
+      send(SendParameters{
+            to: nft_address, 
+            value: ton(0.2),
+            mode: SendPayGasSeparately,
+            body: Transfer { 
+                    queryId: msg.queryId,            
+                    newOwner: self.owner, 
+                    responseDestination: self.owner,
+                    customPayload: null, 
+                    forwardAmount: 0,
+                    forwardPayload: emptySlice()}.toCell()});
       }
 
     }
