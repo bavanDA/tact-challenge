@@ -125,10 +125,12 @@ contract Task5 with Deployable {
 
       nativeReserve(ton("2") , 0);
 
+      nativeReserve(myBalance() + ton("2") - ctx.value,0);
+
        send(SendParameters{
             to: nft_address, 
             value: 0,
-            mode: SendRemainingValue + SendPayGasSeparately,
+            mode: SendRemainingBalance + SendPayGasSeparately,
             body: Transfer { 
                     queryId: msg.queryId,            
                     newOwner: msg.prevOwner, 
