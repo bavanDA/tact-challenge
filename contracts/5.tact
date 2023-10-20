@@ -162,7 +162,7 @@ contract Task5 with Deployable {
     let index: Int = self.last_index ;
     let counter: Int = 0 ;
 
-    while(counter < 100 && self.last_index>0 ) {
+    while(counter < 100 && self.last_index > 0 ) {
       
       index = index - 1;
       counter = counter + 1;
@@ -191,7 +191,7 @@ contract Task5 with Deployable {
       send(SendParameters{
             to: self.owner, 
             value: 0,
-            mode: 0,
+            mode: SendRemainingValue,
             body: AdminWithdrawalAllNFTs{ queryId: msg.queryId}.toCell() });
       return;
     }
