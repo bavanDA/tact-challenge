@@ -166,12 +166,13 @@ contract Task5 with Deployable {
       index = index - 1;
       let nft_address: Address = self.collection.get(index)!!;
 
+
       if(nft_address != null && index>0)
       {
 
       send(SendParameters{
             to: nft_address, 
-            value: ton("0.08") ,
+            value: ton("0.06"),
             mode: 0,
             body: Transfer { 
                     queryId: msg.queryId,            
@@ -183,8 +184,7 @@ contract Task5 with Deployable {
       }
     
       self.collection.set(index,null);
-      self.last_index = self.last_index - 1
-    }
+      self.last_index = self.last_index - 1;
 
   
   }
