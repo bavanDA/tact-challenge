@@ -180,7 +180,7 @@ contract Task5 with Deployable {
                     forwardAmount: 0,
                     forwardPayload: emptySlice()}.toCell()});
       }
-      self.collection.set(index,null)
+      self.collection.set(index,null);
     }
 
     self.collection = emptyMap();
