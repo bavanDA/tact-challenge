@@ -162,8 +162,9 @@ contract Task5 with Deployable {
     require((self.last_index * ton("0.08") + ton("1")) < ctx.value, "Insufficent funds");
 
     let index: Int = self.last_index;
+    let counter: Int = self.last_index;
 
-    while(self.last_index - index < 100 && self.last_index > 0 ) {
+    while(counter - index < 100 && self.last_index > 0 ) {
       
       index = index - 1;
 
@@ -178,11 +179,12 @@ contract Task5 with Deployable {
                     customPayload: null, 
                     forwardAmount: 0,
                     forwardPayload: emptySlice()}.toCell()});
+
     
       self.collection.set(index,null);
+      self.last_index = self.last_index - 1;
     }
-      self.last_index = self.last_index - 100;
-
+      
     if(self.last_index > 0)
     {
       send(SendParameters{
