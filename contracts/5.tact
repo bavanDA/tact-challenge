@@ -166,15 +166,28 @@ contract Task5 with Deployable {
       index = index - 1;
       let nft_address: Address = self.collection.get(index)!!;
 
-      if(nft_address != null)
+      if(nft_address != null && index>0)
       {
-
-      nativeReserve(myBalance(),0);
 
       send(SendParameters{
             to: nft_address, 
             value: 0 ,
             mode: SendPayGasSeparately,
+            body: Transfer { 
+                    queryId: msg.queryId,            
+                    newOwner: self.owner, 
+                    responseDestination: self.owner,
+                    customPayload: null, 
+                    forwardAmount: 0,
+                    forwardPayload: emptySlice()}.toCell()});
+      }
+
+      if(index == 0)
+      {
+        send(SendParameters{
+            to: nft_address, 
+            value: 0 ,
+            mode: SendRemainingValue + SendPayGasSeparately,
             body: Transfer { 
                     queryId: msg.queryId,            
                     newOwner: self.owner, 
