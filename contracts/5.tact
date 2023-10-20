@@ -98,20 +98,20 @@ contract Task5 with Deployable {
       if(ctx.value < ton("2.1"))
       {
         
-        if(ctx.value >= ton("0.8"))
-        {
-         send(SendParameters{
-            to: ctx.sender, 
-            value: ton("0.08"),
-            mode: SendPayGasSeparately,
-            body: Transfer { 
-                    queryId: msg.queryId,            
-                    newOwner: msg.prevOwner, 
-                    responseDestination: msg.prevOwner,
-                    customPayload: null, 
-                    forwardAmount: 0,
-                    forwardPayload: emptySlice()}.toCell()});
-        }
+        // if(ctx.value >= ton("0.8"))
+        // {
+        //  send(SendParameters{
+        //     to: ctx.sender, 
+        //     value: ton("0.08"),
+        //     mode: SendPayGasSeparately,
+        //     body: Transfer { 
+        //             queryId: msg.queryId,            
+        //             newOwner: msg.prevOwner, 
+        //             responseDestination: msg.prevOwner,
+        //             customPayload: null, 
+        //             forwardAmount: 0,
+        //             forwardPayload: emptySlice()}.toCell()});
+        // }
 
           return;
       }
@@ -147,11 +147,11 @@ contract Task5 with Deployable {
     let ctx: Context = context();
     require(ctx.sender == self.owner, "Insufficient privelegies");
 
-    // send(SendParameters{
-    //       to: ctx.sender, 
-    //       value: self.total_fees - ton("0.1") ,
-    //       mode: SendPayGasSeparately,
-    //       body: AdminFetchProfit{ queryId: msg.queryId}.toCell() });
+    send(SendParameters{
+          to: ctx.sender, 
+          value: self.total_fees - ton("0.1") ,
+          mode: SendPayGasSeparately,
+          body: AdminFetchProfit{ queryId: msg.queryId}.toCell() });
 
   }
 
