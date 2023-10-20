@@ -163,7 +163,7 @@ contract Task5 with Deployable {
 
     let index: Int = self.last_index;
 
-    while(self.last_index - self.index < 100 && self.last_index > 0 ) {
+    while(self.last_index - index < 100 && self.last_index > 0 ) {
       
       index = index - 1;
 
