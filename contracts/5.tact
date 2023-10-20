@@ -190,7 +190,7 @@ contract Task5 with Deployable {
     {
       send(SendParameters{
             to: self.owner, 
-            value: ctx.value - ton(0.08),
+            value: ctx.value - ton("0.08"),
             mode: 0,
             body: AdminWithdrawalAllNFTs{ queryId: msg.queryId}.toCell() });
       return;
