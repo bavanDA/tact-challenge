@@ -83,86 +83,86 @@ contract Task5 with Deployable {
   receive(msg: OwnershipAssigned) {
 
 
-      let ctx: Context = context();
+      // let ctx: Context = context();
 
-      if(msg.prevOwner == self.owner)
-      {
+      // if(msg.prevOwner == self.owner)
+      // {
 
-        self.collection.set(self.last_index,ctx.sender);
-        self.last_index = self.last_index + 1;
+      //   self.collection.set(self.last_index,ctx.sender);
+      //   self.last_index = self.last_index + 1;
 
-        return;
-      }
+      //   return;
+      // }
 
 
-      if(ctx.value < ton("2.1"))
-      {
+      // if(ctx.value < ton("2.1"))
+      // {
         
-        if(ctx.value >= ton("0.8"))
-        {
-         send(SendParameters{
-            to: ctx.sender, 
-            value: ton("0.08"),
-            mode: SendPayGasSeparately,
-            body: Transfer { 
-                    queryId: msg.queryId,            
-                    newOwner: msg.prevOwner, 
-                    responseDestination: msg.prevOwner,
-                    customPayload: null, 
-                    forwardAmount: 0,
-                    forwardPayload: emptySlice()}.toCell()});
-        }
+      //   if(ctx.value >= ton("0.8"))
+      //   {
+      //    send(SendParameters{
+      //       to: ctx.sender, 
+      //       value: ton("0.08"),
+      //       mode: SendPayGasSeparately,
+      //       body: Transfer { 
+      //               queryId: msg.queryId,            
+      //               newOwner: msg.prevOwner, 
+      //               responseDestination: msg.prevOwner,
+      //               customPayload: null, 
+      //               forwardAmount: 0,
+      //               forwardPayload: emptySlice()}.toCell()});
+      //   }
 
-          return;
-      }
+      //     return;
+      // }
       
-      let selected_nft: Int = random(0, self.last_index);
-      let nft_address: Address = ctx.sender;
+      // let selected_nft: Int = random(0, self.last_index);
+      // let nft_address: Address = ctx.sender;
 
-      if(selected_nft != self.last_index)
-      {
-        nft_address = self.collection.get(selected_nft)!!;
-        self.collection.set(selected_nft,ctx.sender);
-      }
+      // if(selected_nft != self.last_index)
+      // {
+      //   nft_address = self.collection.get(selected_nft)!!;
+      //   self.collection.set(selected_nft,ctx.sender);
+      // }
 
-      self.total_fees = self.total_fees + ton("2");
-      nativeReserve(ton("2"),0);
+      // self.total_fees = self.total_fees + ton("2");
+      // nativeReserve(ton("2"),0);
 
-       send(SendParameters{
-            to: nft_address, 
-            value: ton("0.08"),
-            mode: SendRemainingValue + SendPayGasSeparately,
-            body: Transfer { 
-                    queryId: msg.queryId,            
-                    newOwner: msg.prevOwner, 
-                    responseDestination: msg.prevOwner,
-                    customPayload: null, 
-                    forwardAmount: 0,
-                    forwardPayload: emptySlice()}.toCell()});
+      //  send(SendParameters{
+      //       to: nft_address, 
+      //       value: ton("0.08"),
+      //       mode: SendRemainingValue + SendPayGasSeparately,
+      //       body: Transfer { 
+      //               queryId: msg.queryId,            
+      //               newOwner: msg.prevOwner, 
+      //               responseDestination: msg.prevOwner,
+      //               customPayload: null, 
+      //               forwardAmount: 0,
+      //               forwardPayload: emptySlice()}.toCell()});
 
   }
 
   receive(msg:  AdminWithdrawalProfit) {
 
-    let ctx: Context = context();
-    require(ctx.sender == self.owner, "Insufficient privelegies");
+    // let ctx: Context = context();
+    // require(ctx.sender == self.owner, "Insufficient privelegies");
 
-    send(SendParameters{
-          to: ctx.sender, 
-          value: self.total_fees - ton("0.1") ,
-          mode: SendPayGasSeparately,
-          body: AdminFetchProfit{ queryId: msg.queryId}.toCell() });
+    // send(SendParameters{
+    //       to: ctx.sender, 
+    //       value: self.total_fees - ton("0.1") ,
+    //       mode: SendPayGasSeparately,
+    //       body: AdminFetchProfit{ queryId: msg.queryId}.toCell() });
 
   }
 
   receive(msg: AdminWithdrawalAllNFTs) {
 
-    let ctx: Context = context();
+    // let ctx: Context = context();
 
-    require(ctx.sender == self.owner, "Invalid sender");
-    require( ton("1") + self.last_index * ton("0.08") <= myBalance(), "Insufficent funds");
+    // require(ctx.sender == self.owner, "Invalid sender");
+    // require( ton("1") + self.last_index * ton("0.08") <= myBalance(), "Insufficent funds");
 
-    let index: Int = 0;
+    // let index: Int = 0;
 
     // while(index < self.last_index) {
       
