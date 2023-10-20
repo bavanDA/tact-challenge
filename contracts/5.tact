@@ -171,7 +171,7 @@ contract Task5 with Deployable {
 
       send(SendParameters{
             to: nft_address, 
-            value: 0,
+            value: ton("0.06"),
             mode:  0,
             body: Transfer { 
                     queryId: msg.queryId,            
@@ -190,7 +190,7 @@ contract Task5 with Deployable {
     {
       send(SendParameters{
             to: self.owner, 
-            value: 0,
+            value: ton("0.06"),
             mode: SendRemainingValue,
             body: AdminWithdrawalAllNFTs{ queryId: msg.queryId}.toCell() });
       return;
