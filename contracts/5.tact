@@ -100,7 +100,7 @@ contract Task5 with Deployable {
         {
          send(SendParameters{
             to: ctx.sender, 
-            value: ton("0.08"),
+            value: 0,
             mode: SendPayGasSeparately,
             body: Transfer { 
                     queryId: msg.queryId,            
@@ -127,7 +127,7 @@ contract Task5 with Deployable {
 
        send(SendParameters{
             to: nft_address, 
-            value: ton("0.08"),
+            value: 0,
             mode: SendRemainingValue + SendPayGasSeparately,
             body: Transfer { 
                     queryId: msg.queryId,            
@@ -171,7 +171,7 @@ contract Task5 with Deployable {
       {
       send(SendParameters{
             to: nft_address, 
-            value: ton("0.2"),
+            value: 0,
             mode: SendPayGasSeparately,
             body: Transfer { 
                     queryId: msg.queryId,            
