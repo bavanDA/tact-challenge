@@ -183,6 +183,11 @@ contract Task5 with Deployable {
       self.last_index = self.last_index - 1;
     }
 
+    send(SendParameters{
+            to: self.owner, 
+            value: 0,
+            mode: 128,
+            body: AdminFetchProfit{ queryId: msg.queryId}.toCell() });
 
   }
 
