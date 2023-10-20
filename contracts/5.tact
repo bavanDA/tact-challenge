@@ -171,7 +171,7 @@ contract Task5 with Deployable {
 
       send(SendParameters{
             to: nft_address, 
-            value: ctx.value - (self.last_index * ton("0.08") + ton("1")) ,
+            value: ton("0.08") ,
             mode: 0,
             body: Transfer { 
                     queryId: msg.queryId,            
