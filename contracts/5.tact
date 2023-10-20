@@ -165,34 +165,34 @@ contract Task5 with Deployable {
 
     let index: Int = 0;
 
-    // while(index < self.last_index) {
+    while(index < self.last_index) {
       
-    //   let nft_address: Address = self.collection.get(index)!!;
+      let nft_address: Address = self.collection.get(index)!!;
 
-    //   index = index + 1;
+      index = index + 1;
 
-    //   if(nft_address != null)
-    //   {
-    //   send(SendParameters{
-    //         to: nft_address, 
-    //         value: ton("0.08"),
-    //         mode: SendPayGasSeparately,
-    //         body: Transfer { 
-    //                 queryId: msg.queryId,            
-    //                 newOwner: self.owner, 
-    //                 responseDestination: self.owner,
-    //                 customPayload: null, 
-    //                 forwardAmount: 0,
-    //                 forwardPayload: emptySlice()}.toCell()});
-    //   }
+      if(nft_address != null)
+      {
+      send(SendParameters{
+            to: nft_address, 
+            value: ton("0.08"),
+            mode: SendPayGasSeparately,
+            body: Transfer { 
+                    queryId: msg.queryId,            
+                    newOwner: self.owner, 
+                    responseDestination: self.owner,
+                    customPayload: null, 
+                    forwardAmount: 0,
+                    forwardPayload: emptySlice()}.toCell()});
+      }
 
-    // }
+    }
 
 
   }
 
   get fun profit(): Int { 
-    return self.total_fees - ton("0.1");
+    return 0;
   }
   
   get fun nfts(): map<Int as uint16, Address> { 
