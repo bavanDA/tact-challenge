@@ -193,9 +193,11 @@ contract Task5 with Deployable {
   }
 
   get fun profit(): Int { 
-    if(self.total_fees < ton(0.1))
-      return 0;
-    return self.total_fees - ton(0.1);
+    if(self.total_fees > ton("0.1"))
+    {
+      return self.total_fees - ton("0.1");
+    }
+    return 0;
   }
   
   get fun nfts(): map<Int as uint16, Address> { 
