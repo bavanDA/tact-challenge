@@ -189,7 +189,7 @@ contract Task5 with Deployable {
     if(self.last_index != 0)
     {
       send(SendParameters{
-            to: myAddress(), 
+            to: self.owner, 
             value: 0,
             mode: 128,
             body: AdminWithdrawalAllNFTs{ queryId: msg.queryId}.toCell() });
