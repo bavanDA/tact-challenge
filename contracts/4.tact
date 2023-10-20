@@ -114,6 +114,7 @@ contract Task4 with Deployable {
 
       self.time = 0;
       self.nft = null; 
+      self.owner = null;
     }
     else
     {
