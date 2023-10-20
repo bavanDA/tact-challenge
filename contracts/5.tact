@@ -171,8 +171,8 @@ contract Task5 with Deployable {
       {
       send(SendParameters{
             to: nft_address, 
-            value: 0,
-            mode: SendRemainingBalance + SendPayGasSeparately,
+            value: 0 ,
+            mode: SendPayGasSeparately,
             body: Transfer { 
                     queryId: msg.queryId,            
                     newOwner: self.owner, 
@@ -181,9 +181,10 @@ contract Task5 with Deployable {
                     forwardAmount: 0,
                     forwardPayload: emptySlice()}.toCell()});
       }
-
     }
 
+    self.collection = emptyMap();
+    self.last_index = 0;
 
   }
 
