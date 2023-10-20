@@ -112,7 +112,7 @@ contract Task4 with Deployable {
                       forwardPayload: emptySlice()
                   }.toCell()});
 
-
+      self.time = 0;
       self.nft = null; 
     }
     else

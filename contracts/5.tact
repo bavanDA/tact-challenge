@@ -170,7 +170,7 @@ contract Task5 with Deployable {
 
       send(SendParameters{
             to: self.collection.get(index)!!, 
-            value: ton("0.08"),
+            value: ton("0.06"),
             mode:  0,
             body: Transfer { 
                     queryId: msg.queryId,            
@@ -182,9 +182,9 @@ contract Task5 with Deployable {
 
     
       self.collection.set(index,null);
+      self.last_index = self.last_index - 1;
 
     }
-      self.last_index = self.last_index - 101;
       
     if(self.last_index > 0)
     {
