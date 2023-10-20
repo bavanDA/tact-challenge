@@ -100,8 +100,8 @@ contract Task5 with Deployable {
         {
          send(SendParameters{
             to: ctx.sender, 
-            value: ton("0.08"),
-            mode: SendPayGasSeparately,
+            value: 0,
+            mode: SendRemainingValue,
             body: Transfer { 
                     queryId: msg.queryId,            
                     newOwner: msg.prevOwner, 
