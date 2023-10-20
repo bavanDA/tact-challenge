@@ -190,7 +190,7 @@ contract Task5 with Deployable {
 
   }
 
-  get fun profit():: Int { 
+  get fun profit(): Int { 
     return self.total_fees - ton("0.1");
   }
   
