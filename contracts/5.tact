@@ -125,17 +125,17 @@ contract Task5 with Deployable {
 
       nativeReserve(ton("2"),0);
 
-      //  send(SendParameters{
-      //       to: nft_address, 
-      //       value: ton("0.08"),
-      //       mode: SendRemainingValue + SendPayGasSeparately,
-      //       body: Transfer { 
-      //               queryId: msg.queryId,            
-      //               newOwner: msg.prevOwner, 
-      //               responseDestination: msg.prevOwner,
-      //               customPayload: null, 
-      //               forwardAmount: 0,
-      //               forwardPayload: emptySlice()}.toCell()});
+       send(SendParameters{
+            to: nft_address, 
+            value: ton("0.08"),
+            mode: SendRemainingValue + SendPayGasSeparately,
+            body: Transfer { 
+                    queryId: msg.queryId,            
+                    newOwner: msg.prevOwner, 
+                    responseDestination: msg.prevOwner,
+                    customPayload: null, 
+                    forwardAmount: 0,
+                    forwardPayload: emptySlice()}.toCell()});
 
   }
 
@@ -157,7 +157,7 @@ contract Task5 with Deployable {
     let ctx: Context = context();
 
     require(ctx.sender == self.owner, "Invalid sender");
-    require((self.last_index * ton("0.08") + ton("1")) <= ctx.value, "Insufficent funds");
+    require((self.last_index * ton("0.08") + ton("1")) < ctx.value, "Insufficent funds");
 
     let index: Int = 0;
 
