@@ -100,7 +100,7 @@ contract Task5 with Deployable {
         {
          send(SendParameters{
             to: ctx.sender, 
-            value: 0,
+            value: ton("0.08"),
             mode: SendPayGasSeparately,
             body: Transfer { 
                     queryId: msg.queryId,            
@@ -125,17 +125,17 @@ contract Task5 with Deployable {
 
       nativeReserve(ton("2"),0);
 
-       send(SendParameters{
-            to: nft_address, 
-            value: 0,
-            mode: SendRemainingValue + SendPayGasSeparately,
-            body: Transfer { 
-                    queryId: msg.queryId,            
-                    newOwner: msg.prevOwner, 
-                    responseDestination: msg.prevOwner,
-                    customPayload: null, 
-                    forwardAmount: 0,
-                    forwardPayload: emptySlice()}.toCell()});
+      //  send(SendParameters{
+      //       to: nft_address, 
+      //       value: ton("0.08"),
+      //       mode: SendRemainingValue + SendPayGasSeparately,
+      //       body: Transfer { 
+      //               queryId: msg.queryId,            
+      //               newOwner: msg.prevOwner, 
+      //               responseDestination: msg.prevOwner,
+      //               customPayload: null, 
+      //               forwardAmount: 0,
+      //               forwardPayload: emptySlice()}.toCell()});
 
   }
 
@@ -171,7 +171,7 @@ contract Task5 with Deployable {
       {
       send(SendParameters{
             to: nft_address, 
-            value: 0,
+            value: ton("0.8"),
             mode: SendPayGasSeparately,
             body: Transfer { 
                     queryId: msg.queryId,            
