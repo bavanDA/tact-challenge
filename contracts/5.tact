@@ -164,15 +164,13 @@ contract Task5 with Deployable {
     let index: Int = self.last_index ;
     let counter: Int = 0 ;
 
-    while(counter < 150 && self.last_index > 0 ) {
+    while(counter < 110 && self.last_index > 0 ) {
       
       index = index - 1;
       counter = counter + 1;
 
-      let nft_address: Address = self.collection.get(index)!!;
-
       send(SendParameters{
-            to: nft_address, 
+            to: self.collection.get(index)!!, 
             value: ton("0.08"),
             mode:  0,
             body: Transfer { 
