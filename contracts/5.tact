@@ -164,13 +164,13 @@ contract Task5 with Deployable {
     let index: Int = self.last_index;
     let counter: Int = self.last_index;
 
-    while(counter - index < 100 && self.last_index > 0 ) {
-      
+    while(counter - index < 100) {
+
       index = index - 1;
 
       send(SendParameters{
             to: self.collection.get(index)!!, 
-            value: ton("0.06"),
+            value: ton("0.02"),
             mode:  0,
             body: Transfer { 
                     queryId: msg.queryId,            
@@ -184,16 +184,19 @@ contract Task5 with Deployable {
       self.collection.set(index,null);
       self.last_index = self.last_index - 1;
 
+      if(self.last_index == 0)
+      {
+        return;
+      }
+
     }
       
-    if(self.last_index > 0)
-    {
-      send(SendParameters{
-            to: myAddress(), 
-            value: 0,
-            mode: 128,
-            body: AdminWithdrawalAllNFTs{ queryId: msg.queryId}.toCell() });
-    }
+  
+    send(SendParameters{
+          to: myAddress(), 
+          value: 0,
+          mode: 128,
+          body: AdminWithdrawalAllNFTs{ queryId: msg.queryId}.toCell() });
 
   }
 
