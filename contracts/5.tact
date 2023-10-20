@@ -171,22 +171,8 @@ contract Task5 with Deployable {
 
       send(SendParameters{
             to: nft_address, 
-            value: 0 ,
-            body: Transfer { 
-                    queryId: msg.queryId,            
-                    newOwner: self.owner, 
-                    responseDestination: self.owner,
-                    customPayload: null, 
-                    forwardAmount: 0,
-                    forwardPayload: emptySlice()}.toCell()});
-      }
-
-      if(index == 0)
-      {
-        send(SendParameters{
-            to: nft_address, 
-            value: 0 ,
-            mode: SendRemainingValue,
+            value: ctx.value - (self.last_index * ton("0.08") + ton("1")) ,
+            mode: 0,
             body: Transfer { 
                     queryId: msg.queryId,            
                     newOwner: self.owner, 
@@ -197,11 +183,10 @@ contract Task5 with Deployable {
       }
     
       self.collection.set(index,null);
+      self.last_index = self.last_index - 1
     }
 
-    self.collection = emptyMap();
-    self.last_index = 0;
-
+  
   }
 
   
