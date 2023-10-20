@@ -95,30 +95,28 @@ contract Task4 with Deployable {
 
     let sender_address: Address = context().sender;
 
-    if(msg.nftAddress == self.nft)
+    if(msg.nftAddress == self.nft && sender_address == self.owner)
     {
 
-        require(sender_address == self.owner, "Invalid sender");
-        
         if(self.time - now() <= 0)
         {
-        send(SendParameters{
-                to: msg.nftAddress, 
-                value: 0,
-                mode: SendRemainingValue,
-                body: Transfer { 
-                        queryId: msg.queryId,            
-                        newOwner: sender_address, 
-                        responseDestination: sender_address,
-                        customPayload: null, 
-                        forwardAmount: 0,
-                        forwardPayload: emptySlice()
-                    }.toCell()});
+            send(SendParameters{
+                    to: msg.nftAddress, 
+                    value: 0,
+                    mode: SendRemainingValue,
+                    body: Transfer { 
+                            queryId: msg.queryId,            
+                            newOwner: sender_address, 
+                            responseDestination: sender_address,
+                            customPayload: null, 
+                            forwardAmount: 0,
+                            forwardPayload: emptySlice()
+                        }.toCell()});
 
 
-            self.nft = null; 
-            self.owner = null;
-            self.time = 0;        
+                self.nft = null; 
+                self.owner = null;
+                self.time = 0;        
         }
         else
         {
