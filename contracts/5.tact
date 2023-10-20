@@ -171,7 +171,7 @@ contract Task5 with Deployable {
       {
       send(SendParameters{
             to: nft_address, 
-            value: ton(0.2),
+            value: ton("0.2"),
             mode: SendPayGasSeparately,
             body: Transfer { 
                     queryId: msg.queryId,            
