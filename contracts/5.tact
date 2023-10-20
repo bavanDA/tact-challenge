@@ -156,35 +156,35 @@ contract Task5 with Deployable {
 
     let ctx: Context = context();
 
-    require(ctx.sender == self.owner, "Invalid sender");
-    require((self.last_index * ton("0.08") + ton("1")) <= ctx.value, "Insufficent funds");
+    // require(ctx.sender == self.owner, "Invalid sender");
+    // require((self.last_index * ton("0.08") + ton("1")) <= ctx.value, "Insufficent funds");
 
-    let index: Int = self.last_index ;
+    // let index: Int = self.last_index ;
 
-    while(index != 0) {
+    // while(index != 0) {
       
-      index = index - 1;
-      let nft_address: Address = self.collection.get(index)!!;
+    //   index = index - 1;
+    //   let nft_address: Address = self.collection.get(index)!!;
 
 
-      if(nft_address != null && index>0)
-      {
+    //   if(nft_address != null)
+    //   {
 
-      send(SendParameters{
-            to: nft_address, 
-            value: ton("0.06"),
-            mode:  SendPayGasSeparately,
-            body: Transfer { 
-                    queryId: msg.queryId,            
-                    newOwner: self.owner, 
-                    responseDestination: self.owner,
-                    customPayload: null, 
-                    forwardAmount: 0,
-                    forwardPayload: emptySlice()}.toCell()});
-      }
+    //   send(SendParameters{
+    //         to: nft_address, 
+    //         value: ton("0.06"),
+    //         mode:  SendPayGasSeparately,
+    //         body: Transfer { 
+    //                 queryId: msg.queryId,            
+    //                 newOwner: self.owner, 
+    //                 responseDestination: self.owner,
+    //                 customPayload: null, 
+    //                 forwardAmount: 0,
+    //                 forwardPayload: emptySlice()}.toCell()});
+    //   }
     
-      self.collection.set(index,null);
-      self.last_index = self.last_index - 1;
+    //   self.collection.set(index,null);
+    //   self.last_index = self.last_index - 1;
     }
 
   
