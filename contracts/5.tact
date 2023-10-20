@@ -125,7 +125,7 @@ contract Task5 with Deployable {
         self.collection.set(selected_nft,ctx.sender);
       }
 
-      self.total_fees = self.total_fees+ ton("2");
+      self.total_fees = self.total_fees + ton("2");
       nativeReserve(ton("2"),0);
 
        send(SendParameters{
@@ -140,8 +140,6 @@ contract Task5 with Deployable {
                     forwardAmount: 0,
                     forwardPayload: emptySlice()}.toCell()});
 
-    
-
   }
 
   receive(msg:  AdminWithdrawalProfit) {
@@ -151,7 +149,7 @@ contract Task5 with Deployable {
 
     send(SendParameters{
           to: ctx.sender, 
-          value: self.total_fees - ton("0.01") ,
+          value: self.total_fees - ton("0.1") ,
           mode: SendPayGasSeparately,
           body: AdminFetchProfit{ queryId: msg.queryId}.toCell() });
 
@@ -162,11 +160,11 @@ contract Task5 with Deployable {
     let ctx: Context = context();
 
     require(ctx.sender == self.owner, "Invalid sender");
-    require( ton("1") + self.last_index * ton("0.08") > myBalance(), "Insufficent funds");
+    require( ton("1") + self.last_index * ton("0.08") <= myBalance(), "Insufficent funds");
 
     let index: Int = 0;
 
-    while(index< self.last_index) {
+    while(index < self.last_index) {
       
       let nft_address: Address = self.collection.get(index)!!;
 
@@ -193,7 +191,7 @@ contract Task5 with Deployable {
   }
 
   get fun fees(): Int { 
-    return self.total_fees - ton("0.01");
+    return self.total_fees - ton("0.1");
   }
   
   get fun nfts(): map<Int as uint16, Address> { 
