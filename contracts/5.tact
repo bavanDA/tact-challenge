@@ -123,7 +123,7 @@ contract Task5 with Deployable {
         self.collection.set(selected_nft,ctx.sender);
       }
 
-      nativeReserve(myBalance() + ton("2") - ctx.value,0);
+      nativeReserve(myBalance() + ton("2") - ctx.value, 128);
 
        send(SendParameters{
             to: nft_address, 
