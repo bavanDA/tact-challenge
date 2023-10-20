@@ -185,9 +185,9 @@ contract Task5 with Deployable {
     
     //   self.collection.set(index,null);
     //   self.last_index = self.last_index - 1;
-    }
+    // }
 
-  
+
   }
 
   
