@@ -26,28 +26,28 @@ contract Task2 with Deployable {
   
   receive(msg: Refund) {
     
-    let ctx: Context = context();
-    if(ctx.sender == self.admin)
+    if(context().sender == self.admin)
     {
       self.forward(msg.sender, DeployOk{queryId: msg.queryId}.toCell(), false , null);
     }
     else
     {
-      throw(12);
+      throw(110);
     }
   }
 
   receive(msg: Slice) {
 
-    let ctx: Context = context();
+    let sender_address: Address = context().sender;
 
-    if(ctx.sender != self.admin)
+
+    if(sender_address != self.admin)
     {
         send(SendParameters{
         to: self.admin,
         value: 0, 
         mode: SendRemainingValue, 
-        body: beginCell().storeAddress(ctx.sender).storeRef(msg.asCell()).endCell()
+        body: beginCell().storeAddress(sender_address).storeRef(msg.asCell()).endCell()
         });
     }
   }
