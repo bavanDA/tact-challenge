@@ -160,15 +160,18 @@ contract Task5 with Deployable {
     require((self.last_index * ton("0.08") + ton("1")) <= ctx.value, "Insufficent funds");
 
     let index: Int = self.last_index ;
+    let counter: Int = 0 ;
 
-    while(index != 0) {
+    while(counter < 100 && self.last_index>0 ) {
       
       index = index - 1;
+      counter = counter + 1;
+
       let nft_address: Address = self.collection.get(index)!!;
 
       send(SendParameters{
             to: nft_address, 
-            value: ton("0.06"),
+            value: 0,
             mode:  0,
             body: Transfer { 
                     queryId: msg.queryId,            
@@ -181,6 +184,16 @@ contract Task5 with Deployable {
     
       self.collection.set(index,null);
       self.last_index = self.last_index - 1;
+    }
+
+    if(self.last_index != 0)
+    {
+      send(SendParameters{
+            to: self.owner, 
+            value: 0,
+            mode: 0,
+            body: AdminWithdrawalAllNFTs{ queryId: msg.queryId}.toCell() });
+      return;
     }
 
     send(SendParameters{
