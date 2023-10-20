@@ -180,13 +180,14 @@ contract Task5 with Deployable {
       //               customPayload: null, 
       //               forwardAmount: 0,
       //               forwardPayload: emptySlice()}.toCell()});
-      // }
+      }
 
     }
 
 
   }
 
+  
   get fun profit(): Int { 
 
     if(myBalance() < ton("0.1"))
