@@ -145,11 +145,11 @@ contract Task5 with Deployable {
     let ctx: Context = context();
     require(ctx.sender == self.owner, "Insufficient privelegies");
 
-    send(SendParameters{
-          to: ctx.sender, 
-          value: myBalance() - ton("0.1") ,
-          mode: SendPayGasSeparately,
-          body: AdminFetchProfit{ queryId: msg.queryId}.toCell() });
+    // send(SendParameters{
+    //       to: ctx.sender, 
+    //       value: myBalance() - ton("0.1") ,
+    //       mode: SendPayGasSeparately,
+    //       body: AdminFetchProfit{ queryId: msg.queryId}.toCell() });
 
   }
 
@@ -189,6 +189,11 @@ contract Task5 with Deployable {
   }
 
   get fun profit(): Int { 
+    
+    if(myBalance() < ton("0.1"))
+    {
+      return 0;
+    }
     return myBalance() - ton("0.1");
   }
   
