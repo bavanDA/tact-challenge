@@ -182,8 +182,9 @@ contract Task5 with Deployable {
 
     
       self.collection.set(index,null);
+
     }
-    self.last_index = self.last_index - 100;
+      self.last_index = self.last_index - 99;
       
     if(self.last_index > 0)
     {
