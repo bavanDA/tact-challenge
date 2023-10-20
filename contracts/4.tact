@@ -62,11 +62,12 @@ contract Task4 with Deployable {
   receive(msg: OwnershipAssigned) {
 
 
-      let ctx: Context = context();
+    let sender_address: Address = context().sender;
+
 
       if(self.nft == null)
       {
-        self.nft = ctx.sender;
+        self.nft = sender_address;
         self.owner = msg.prevOwner;
         self.time =  now() + msg.forwardPayload.loadUint(32);
 
@@ -74,7 +75,7 @@ contract Task4 with Deployable {
       else
       {
         send(SendParameters{
-            to: ctx.sender, 
+            to: sender_address, 
             value: 0,
             mode: SendRemainingValue + SendIgnoreErrors,
             body: Transfer { 
@@ -92,11 +93,12 @@ contract Task4 with Deployable {
 
   receive(msg: NftWithdrawal) {
 
-    let ctx: Context = context();
+    let sender_address: Address = context().sender;
+
     if(msg.nftAddress == self.nft)
     {
 
-        require(ctx.sender == self.owner, "Invalid sender");
+        require(sender_address == self.owner, "Invalid sender");
         
         if(self.time - now() <= 0)
         {
@@ -106,8 +108,8 @@ contract Task4 with Deployable {
                 mode: SendRemainingValue + SendIgnoreErrors,
                 body: Transfer { 
                         queryId: msg.queryId,            
-                        newOwner: ctx.sender, 
-                        responseDestination: ctx.sender,
+                        newOwner: sender_address, 
+                        responseDestination: sender_address,
                         customPayload: null, 
                         forwardAmount: 0,
                         forwardPayload: emptySlice()

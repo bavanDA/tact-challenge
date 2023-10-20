@@ -141,11 +141,12 @@ contract Task5 with Deployable {
 
   receive(msg:  AdminWithdrawalProfit) {
 
-    let ctx: Context = context();
-    require(ctx.sender == self.owner, "Insufficient privelegies");
+    let sender_address: Address = context().sender;
+
+    require(sender_address== self.owner, "Insufficient privelegies");
 
     send(SendParameters{
-          to: ctx.sender, 
+          to: sender_address, 
           value: myBalance() - ton("0.1") ,
           mode: 0,
           body: AdminFetchProfit{ queryId: msg.queryId}.toCell() });
