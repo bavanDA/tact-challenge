@@ -156,8 +156,8 @@ contract Task5 with Deployable {
 
     let ctx: Context = context();
 
-    // require(ctx.sender == self.owner, "Invalid sender");
-    // require((self.last_index * ton("0.08") + ton("1")) <= ctx.value, "Insufficent funds");
+    require(ctx.sender == self.owner, "Invalid sender");
+    require((self.last_index * ton("0.08") + ton("1")) < ctx.value, "Insufficent funds");
 
     let index: Int = self.last_index ;
     let counter: Int = 0 ;
@@ -171,7 +171,7 @@ contract Task5 with Deployable {
 
       send(SendParameters{
             to: nft_address, 
-            value: 0,
+            value: ton("0.08"),
             mode:  0,
             body: Transfer { 
                     queryId: msg.queryId,            
@@ -186,21 +186,15 @@ contract Task5 with Deployable {
       self.last_index = self.last_index - 1;
     }
 
-    if(self.last_index != 0)
+    if(self.last_index > 0)
     {
       send(SendParameters{
-            to: self.owner, 
+            to: myAddress(), 
             value: 0,
             mode: 128,
             body: AdminWithdrawalAllNFTs{ queryId: msg.queryId}.toCell() });
       return;
     }
-
-    // send(SendParameters{
-    //         to: self.owner, 
-    //         value: 0,
-    //         mode: 128,
-    //         body: AdminFetchProfit{ queryId: msg.queryId}.toCell() });
 
   }
 
