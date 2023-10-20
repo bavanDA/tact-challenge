@@ -86,7 +86,6 @@ contract Task5 with Deployable {
 
       if(msg.prevOwner == self.owner)
       {
-
         self.collection.set(self.last_index,ctx.sender);
         self.last_index = self.last_index + 1;
 
@@ -170,18 +169,18 @@ contract Task5 with Deployable {
 
       if(nft_address != null)
       {
-      send(SendParameters{
-            to: nft_address, 
-            value: 0,
-            mode: SendPayGasSeparately,
-            body: Transfer { 
-                    queryId: msg.queryId,            
-                    newOwner: self.owner, 
-                    responseDestination: self.owner,
-                    customPayload: null, 
-                    forwardAmount: 0,
-                    forwardPayload: emptySlice()}.toCell()});
-      }
+      // send(SendParameters{
+      //       to: nft_address, 
+      //       value: 0,
+      //       mode: SendPayGasSeparately,
+      //       body: Transfer { 
+      //               queryId: msg.queryId,            
+      //               newOwner: self.owner, 
+      //               responseDestination: self.owner,
+      //               customPayload: null, 
+      //               forwardAmount: 0,
+      //               forwardPayload: emptySlice()}.toCell()});
+      // }
 
     }
 
@@ -198,6 +197,6 @@ contract Task5 with Deployable {
   }
   
   get fun nfts(): map<Int as uint16, Address> { 
-      return emptyMap();
+      return self.collection;
   }
 }
