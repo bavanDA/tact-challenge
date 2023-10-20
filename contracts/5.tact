@@ -157,11 +157,8 @@ contract Task5 with Deployable {
     let ctx: Context = context();
 
     require(ctx.sender == self.owner || ctx.sender == myAddress() , "Invalid sender");
-
-    if(ctx.sender == self.owner)
-    {
+   
     require((self.last_index * ton("0.08") + ton("1")) < ctx.value, "Insufficent funds");
-    }
 
     let index: Int = self.last_index ;
     let counter: Int = 0 ;
@@ -197,7 +194,6 @@ contract Task5 with Deployable {
             value: 0,
             mode: 128,
             body: AdminWithdrawalAllNFTs{ queryId: msg.queryId}.toCell() });
-      return;
     }
 
   }

@@ -70,19 +70,19 @@ contract Task3 with Deployable {
 
   receive(msg: TokenNotification) {
 
-      let ctx: Context = context();
+      let sender_address: Address = context().sender;
 
-      require(ctx.sender == self.jettonAddressA || ctx.sender == self.jettonAddressB, "Invalid Jetton");
+      require(sender_address == self.jettonAddressA || sender_address == self.jettonAddressB, "Invalid Jetton");
 
       if(msg.from == self.owner)
       {
-        if(ctx.sender == self.jettonAddressA)
+        if(sender_address == self.jettonAddressA)
         {
           self.aAmount = self.aAmount + msg.amount;
           return;
         }
         
-        if(ctx.sender == self.jettonAddressB)
+        if(sender_address == self.jettonAddressB)
         {
           self.bAmount  = self.bAmount + msg.amount;
           return;
@@ -91,7 +91,7 @@ contract Task3 with Deployable {
 
     if(self.aAmount> 0 && self.bAmount> 0 ) 
     {
-          if(ctx.sender == self.jettonAddressA)
+          if(sender_address == self.jettonAddressA)
           {
               let jetton_amount_b: Int = (self.bAmount * self.decimal / self.aAmount) * msg.amount / self.decimal;
 
@@ -146,7 +146,7 @@ contract Task3 with Deployable {
   
 
       send(SendParameters{
-          to: ctx.sender, 
+          to: sender_address, 
           value: 0,
           mode: SendRemainingValue,
           body: TokenTransfer{ queryId: 0,
