@@ -72,7 +72,6 @@ contract Task5 with Deployable {
   
   collection: map<Int as uint16, Address>;
   last_index : Int = 0;
-  total_fees : Int = 0;
   
   init(seed: Int, owner: Address) {
     self.owner = owner;
@@ -125,8 +124,6 @@ contract Task5 with Deployable {
         self.collection.set(selected_nft,ctx.sender);
       }
 
-      self.total_fees = self.total_fees + ton("2");
-
       nativeReserve(ton("2"),0);
 
        send(SendParameters{
@@ -154,7 +151,6 @@ contract Task5 with Deployable {
           mode: SendPayGasSeparately,
           body: AdminFetchProfit{ queryId: msg.queryId}.toCell() });
 
-    self.total_fees=0;       
   }
 
   receive(msg: AdminWithdrawalAllNFTs) {
@@ -193,11 +189,7 @@ contract Task5 with Deployable {
   }
 
   get fun profit(): Int { 
-    if(self.total_fees > ton("0.1"))
-    {
-      return self.total_fees - ton("0.1");
-    }
-    return 0;
+    return myBalance() - ton("0.1");
   }
   
   get fun nfts(): map<Int as uint16, Address> { 
