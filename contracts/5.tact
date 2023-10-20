@@ -158,7 +158,7 @@ contract Task5 with Deployable {
     let ctx: Context = context();
 
     require(ctx.sender == self.owner, "Invalid sender");
-    // require( ton("1") + (self.last_index-1) * ton("0.08") <= myBalance(), "Insufficent funds");
+    require((self.last_index * ton("0.08") + ton("1")) <= myBalance(), "Insufficent funds");
 
     let index: Int = 0;
 
